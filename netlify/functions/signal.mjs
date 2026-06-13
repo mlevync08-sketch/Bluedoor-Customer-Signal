@@ -165,7 +165,7 @@ function normalizeRequest(body) {
 }
 
 async function callOpenAI(request) {
-  const model = process.env.OPENAI_MODEL || 'gpt-5.5';
+  const model = process.env.OPENAI_MODEL || 'gpt-4.1';
 
   const instructions = `You are the Bluedoor Customer Signal analyst. Your job is to run a live market scan and produce business intelligence for Bluedoor, a healthcare and life-sciences growth agency.
 
@@ -211,13 +211,13 @@ Number of companies requested: ${request.limit}
 Find and rank the best companies. Include evidence links and a recommended first outreach angle for each.`;
 
   const requestBody = {
-    model,
-    tools: [{ type: 'web_search', external_web_access: true }],
-    tool_choice: 'required',
-    input: [
-      { role: 'developer', content: instructions },
-      { role: 'user', content: userInput }
-    ],
+   model,
+   tools: [{ type: 'web_search_preview' }],
+   tool_choice: 'required',
+   input: [
+     { role: 'developer', content: instructions },
+     { role: 'user', content: userInput }
+   ],
     text: {
       format: {
         type: 'json_schema',
